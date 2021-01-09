@@ -12,6 +12,7 @@ import { useHistory, Link } from "react-router-dom";
 
 import { rules } from "./validation";
 import { registerUser } from "../../api/auth";
+import StoreLogo from "../../components/StoreLogo";
 
 const statuslist = {
   idle: "idle",
@@ -54,6 +55,9 @@ export default function Register() {
   return (
     <LayoutOne size="small">
       <Card color="white">
+        <div className="text-center mb-5">
+          <StoreLogo />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl errorMessage={errors.full_name?.message}>
             <InputText

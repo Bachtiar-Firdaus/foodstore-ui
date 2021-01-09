@@ -8,10 +8,11 @@ import {
   InputPassword,
 } from "upkit";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { rules } from "./validation";
 import { registerUser } from "../../api/auth";
+import StoreLogo from "../../components/StoreLogo";
 
 const statuslist = {
   idle: "idle",
@@ -48,6 +49,9 @@ export default function Login() {
   return (
     <LayoutOne size="small">
       <Card color="white">
+        <div className="text-center mb-5">
+          <StoreLogo />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl errorMessage={errors.email?.message}>
             <InputText
@@ -73,6 +77,12 @@ export default function Login() {
             {status === statuslist.process ? "sedang memproses" : "Mendaftar"}
           </Button>
         </form>
+        <div className="text-center mt-2">
+          Belum punya akun?
+          <Link to="/Register">
+            <b> Daftar Sekarang. </b>
+          </Link>
+        </div>
       </Card>
     </LayoutOne>
   );
