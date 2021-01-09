@@ -10,12 +10,30 @@ import {
 
 import { useForm } from "react-hook-form";
 import { rules } from "./validation";
+import { registerUser } from "../../api/auth";
 
 export default function Register() {
   let { register, handleSubmit, errors, setError } = useForm();
   const onSubmit = async (formData) => {
-    let coba = JSON.stringify(formData);
-    console.log("data form", coba);
+    // let coba = JSON.stringify(formData);
+    // console.log("data form", coba);
+    let { password, password_confirmation } = formData;
+    if (password !== password_confirmation) {
+      return setError("password_confirmation", {
+        type: "equality",
+        message: "Konfirmasi password tidak valid",
+      });
+    }
+    let { data } = await registerUser(formData);
+    if (data.error) {
+      let fields = Object.keys(data.fields);
+      fields.forEach((field) => {
+        setError(field, {
+          type: "server",
+          message: data.fields[field]?.properties?.message,
+        });
+      });
+    }
   };
 
   return (
