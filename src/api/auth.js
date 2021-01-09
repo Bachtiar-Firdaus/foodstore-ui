@@ -1,6 +1,5 @@
 import axios from "axios";
 import { config } from "../config";
-import { USER_LOGOUT } from "../features/Auth/constants";
 
 export async function registerUser(data) {
   return await axios.post(`${config.api_host}/auth/register`, data);
@@ -18,7 +17,7 @@ export async function logout() {
   return await axios
     .post(`${config.api_host}/auth/logout`, null, {
       headers: {
-        authorization: "Bearer ${token}",
+        authorization: `Bearer ${token}`,
       },
     })
     .then((response) => {
