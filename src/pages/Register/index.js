@@ -7,13 +7,21 @@ import {
   Button,
   InputPassword,
 } from "upkit";
-
 import { useForm } from "react-hook-form";
+
 import { rules } from "./validation";
 import { registerUser } from "../../api/auth";
 
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
 export default function Register() {
   let { register, handleSubmit, errors, setError } = useForm();
+  // (2) state status dengan nilai default `statuslist.idle`
+  let [status, setStatus] = React.useState(statuslist.idle);
   const onSubmit = async (formData) => {
     // let coba = JSON.stringify(formData);
     // console.log("data form", coba);
@@ -24,6 +32,7 @@ export default function Register() {
         message: "Konfirmasi password tidak valid",
       });
     }
+    setStatus(statuslist.process);
     let { data } = await registerUser(formData);
     if (data.error) {
       let fields = Object.keys(data.fields);
@@ -34,6 +43,7 @@ export default function Register() {
         });
       });
     }
+    setStatus(statuslist.success);
   };
 
   return (
@@ -72,8 +82,12 @@ export default function Register() {
               ref={register(rules.password_confirmation)}
             />
           </FormControl>
-          <Button size="large" fitContainer>
-            Mendaftar
+          <Button
+            size="large"
+            fitContainer
+            disabled={status === statuslist.process}
+          >
+            {status === statuslist.process ? "sedang memproses" : "Mendaftar"}
           </Button>
         </form>
       </Card>
