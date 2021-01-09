@@ -8,6 +8,7 @@ import {
   InputPassword,
 } from "upkit";
 import { useForm } from "react-hook-form";
+import { useHistory, Link } from "react-router-dom";
 
 import { rules } from "./validation";
 import { registerUser } from "../../api/auth";
@@ -22,6 +23,7 @@ export default function Register() {
   let { register, handleSubmit, errors, setError } = useForm();
   // (2) state status dengan nilai default `statuslist.idle`
   let [status, setStatus] = React.useState(statuslist.idle);
+  let history = useHistory();
   const onSubmit = async (formData) => {
     // let coba = JSON.stringify(formData);
     // console.log("data form", coba);
@@ -42,8 +44,11 @@ export default function Register() {
           message: data.fields[field]?.properties?.message,
         });
       });
+      setStatus(statuslist.error);
+      return;
     }
     setStatus(statuslist.success);
+    history.push("/register/berhasil");
   };
 
   return (
@@ -90,6 +95,12 @@ export default function Register() {
             {status === statuslist.process ? "sedang memproses" : "Mendaftar"}
           </Button>
         </form>
+        <div className="text-center mt-2">
+          Sudah punya akun?
+          <Link to="/login">
+            <b> Masuk Sekarang. </b>
+          </Link>
+        </div>
       </Card>
     </LayoutOne>
   );
