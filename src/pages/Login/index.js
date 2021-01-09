@@ -9,10 +9,12 @@ import {
 } from "upkit";
 import { useForm } from "react-hook-form";
 import { useHistory, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import { rules } from "./validation";
-import { registerUser } from "../../api/auth";
 import StoreLogo from "../../components/StoreLogo";
+import { userLogin } from "../../features/Auth/actions";
+import { rules } from "./validation";
+import { login } from "../../api/auth";
 
 const statuslist = {
   idle: "idle",
@@ -22,32 +24,32 @@ const statuslist = {
 };
 export default function Login() {
   let { register, handleSubmit, errors, setError } = useForm();
-  // (2) state status dengan nilai default `statuslist.idle`
   let [status, setStatus] = React.useState(statuslist.idle);
+  let dispatch = useDispatch();
   let history = useHistory();
-  const onSubmit = async (formData) => {
-    // let coba = JSON.stringify(formData);
-    // console.log("data form", coba);
 
+  const onSubmit = async ({ email, password }) => {
     setStatus(statuslist.process);
-    let { data } = await registerUser(formData);
+
+    let { data } = await login(email, password);
+
     if (data.error) {
-      let fields = Object.keys(data.fields);
-      fields.forEach((field) => {
-        setError(field, {
-          type: "server",
-          message: data.fields[field]?.properties?.message,
-        });
+      setError("password", {
+        type: "invalidCredential",
+        message: data.message,
       });
       setStatus(statuslist.error);
-      return;
+    } else {
+      let { user, token } = data;
+      dispatch(userLogin(user, token));
+      history.push("/");
     }
     setStatus(statuslist.success);
-    history.push("/");
   };
 
   return (
     <LayoutOne size="small">
+      <br />
       <Card color="white">
         <div className="text-center mb-5">
           <StoreLogo />
@@ -69,12 +71,8 @@ export default function Login() {
               ref={register(rules.password)}
             />
           </FormControl>
-          <Button
-            size="large"
-            fitContainer
-            disabled={status === statuslist.process}
-          >
-            {status === statuslist.process ? "sedang memproses" : "Mendaftar"}
+          <Button size="large" fitContainer disabled={status === "process"}>
+            Login
           </Button>
         </form>
         <div className="text-center mt-2">
