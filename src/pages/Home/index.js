@@ -26,6 +26,7 @@ import {
   toggleTag,
 } from "../../features/Products/actions";
 import { tags } from "./tags";
+import { addItem } from "../../features/Cart/actions";
 
 export default function Home() {
   let dispatch = useDispatch();
@@ -95,7 +96,7 @@ export default function Home() {
                         title={product.name}
                         imgUrl={`${config.api_host}/upload/${product.image_url}`}
                         price={product.price}
-                        onAddToCart={(_) => null}
+                        onAddToCart={(_) => dispatch(addItem(product))}
                       />
                     </div>
                   );
