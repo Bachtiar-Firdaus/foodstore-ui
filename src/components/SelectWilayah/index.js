@@ -32,7 +32,7 @@ SelectWilayah.defaultProps = {
   tingkat: "provinsi",
 };
 SelectWilayah.propTypes = {
-  tingkat: onbeforeprint(["provinsi", "kabupaten", "kecamatan", "desa"]),
+  tingkat: oneOf(["provinsi", "kabupaten", "kecamatan", "desa"]),
   kodeInduk: oneOfType([number, string]),
   onChange: func,
   value: shape({ label: string, value: oneOfType([string, number]) }),
