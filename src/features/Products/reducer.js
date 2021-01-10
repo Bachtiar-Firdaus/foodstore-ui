@@ -31,6 +31,20 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case START_FETCHING_PRODUCT:
+      return { ...state, status: statuslist.process };
+
+    case ERROR_FETCHING_PRODUCT:
+      return { ...state, status: statuslist.error };
+
+    case SUCCESS_FETCHING_PRODUCT:
+      return {
+        ...state,
+        status: statuslist.success,
+        data: action.data,
+        totalItems: action.count,
+      };
+
     default:
       return state;
   }
