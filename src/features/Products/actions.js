@@ -11,7 +11,7 @@ import {
   PREV_PAGE,
   NEXT_PAGE,
 } from "./constants";
-import { getProducts } from "../../api/product";
+import { getProducts } from "../../api/products";
 
 let debouncedFetchProducts = debounce(getProducts, 1000);
 export const fetchProducts = () => {
