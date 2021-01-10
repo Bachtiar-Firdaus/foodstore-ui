@@ -5,6 +5,7 @@ import { listen } from "./app/listener";
 import "upkit/dist/style.min.css";
 
 import UserAddressAdd from "./pages/UserAddressAdd";
+import UserAddress from "./pages/UserAddress";
 import store from "./app/store";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -28,6 +29,9 @@ function App() {
             <Route path="/login" component={login} />
             <Route path="/register" component={Register} />
             <Route path="/" component={Home} />
+            <Route path="/alamat-pengiriman">
+              <UserAddress />
+            </Route>
             <Route path="/alamat-pengiriman/tambah">
               <UserAddressAdd />
             </Route>
