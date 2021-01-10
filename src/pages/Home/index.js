@@ -27,11 +27,13 @@ import {
 } from "../../features/Products/actions";
 import { tags } from "./tags";
 import { addItem, removeItem } from "../../features/Cart/actions";
+import { useHistory } from "react-router-dom";
 
 export default function Home() {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.products);
   let cart = useSelector((state) => state.cart);
+  let history = useHistory();
   React.useEffect(() => {
     dispatch(fetchProducts());
   }, [
@@ -118,6 +120,7 @@ export default function Home() {
                 items={cart}
                 onItemInc={(item) => dispatch(addItem(item))}
                 onItemDec={(item) => dispatch(removeItem(item))}
+                onCheckout={(_) => history.push("/checkout")}
               />
             </div>
           </div>
