@@ -3,7 +3,7 @@ import { config } from "../../config";
 import { arrayOf, string, shape, oneOfType, number, func } from "prop-types";
 import { CardItem } from "upkit";
 
-export default function Cart({ items }) {
+export default function Cart({ items, onItemInc, onItemDec }) {
   return (
     <div>
       {!items.length ? (
@@ -20,6 +20,8 @@ export default function Cart({ items }) {
               name={item.name}
               qty={item.qty}
               color="orange"
+              onInc={(_) => onItemInc(item)}
+              onDec={(_) => onItemDec(item)}
             />
           </div>
         );
@@ -35,4 +37,6 @@ Cart.propTypes = {
       qty: oneOfType([string, number]).isRequired,
     })
   ),
+  onItemInc: func,
+  onItemDec: func,
 };

@@ -26,7 +26,7 @@ import {
   toggleTag,
 } from "../../features/Products/actions";
 import { tags } from "./tags";
-import { addItem } from "../../features/Cart/actions";
+import { addItem, removeItem } from "../../features/Cart/actions";
 
 export default function Home() {
   let dispatch = useDispatch();
@@ -114,7 +114,11 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/4 h-full shadow-lg border-r border-white bg-gray-100">
-              <Cart items={cart} />
+              <Cart
+                items={cart}
+                onItemInc={(item) => dispatch(addItem(item))}
+                onItemDec={(item) => dispatch(removeItem(item))}
+              />
             </div>
           </div>
         }
