@@ -13,6 +13,7 @@ import {
 import BounceLoader from "react-spinners/BounceLoader";
 
 import TopBar from "../../components/TopBar";
+import Cart from "../../components/Cart";
 import menus from "./menus";
 import { config } from "../../config";
 import {
@@ -29,6 +30,7 @@ import { tags } from "./tags";
 export default function Home() {
   let dispatch = useDispatch();
   let products = useSelector((state) => state.products);
+  let cart = useSelector((state) => state.cart);
   React.useEffect(() => {
     dispatch(fetchProducts());
   }, [
@@ -111,7 +113,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/4 h-full shadow-lg border-r border-white bg-gray-100">
-              Keranjang belanja di sini
+              <Cart items={cart} />
             </div>
           </div>
         }
