@@ -9,10 +9,12 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import RegisterSuccess from "./pages/RegisterSuccess";
 import login from "./pages/Login";
+import { getCart } from "./api/cart";
 
 function App() {
   React.useEffect(() => {
     listen();
+    getCart();
   }, []);
   return (
     <div>

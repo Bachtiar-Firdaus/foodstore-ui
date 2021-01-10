@@ -12,12 +12,12 @@ export function removeItem(item) {
     item,
   };
 }
-export function clearItem() {
+export function clearItems() {
   return {
     type: CLEAR_ITEMS,
   };
 }
-export function setItem(items) {
+export function setItems(items) {
   return {
     type: SET_ITEMS,
     items,
