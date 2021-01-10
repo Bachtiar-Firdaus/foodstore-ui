@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { listen } from "./app/listener";
 import "upkit/dist/style.min.css";
 
+import Checkout from "./pages/Checkout";
 import UserAddressAdd from "./pages/UserAddressAdd";
 import UserAddress from "./pages/UserAddress";
 import store from "./app/store";
@@ -23,18 +24,21 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route path="/register/berhasil">
-              <RegisterSuccess />
-            </Route>
-            <Route path="/login" component={login} />
-            <Route path="/register" component={Register} />
-            <Route path="/" component={Home} />
-            <Route path="/alamat-pengiriman">
-              <UserAddress />
+            <Route path="/checkout">
+              <Checkout />
             </Route>
             <Route path="/alamat-pengiriman/tambah">
               <UserAddressAdd />
             </Route>
+            <Route path="/alamat-pengiriman">
+              <UserAddress />
+            </Route>
+            <Route path="/register/berhasil">
+              <RegisterSuccess />
+            </Route>
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={login} />
+            <Route path="/" component={Home} />
           </Switch>
         </Router>
       </Provider>
