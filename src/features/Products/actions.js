@@ -13,15 +13,18 @@ import {
 } from "./constants";
 import { getProducts } from "../../api/products";
 
-let debouncedFetchProducts = debounce(getProducts, 1000);
+let debouncedFetchProducts = debounce(getProducts, 500);
+
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
     dispatch(startFetchingProducts());
+
     let perPage = getState().products.perPage || 9;
     let currentPage = getState().products.currentPage || 1;
     let tags = getState().products.tags || [];
     let keyword = getState().products.keyword || "";
     let category = getState().products.category || "";
+
     const params = {
       limit: perPage,
       skip: currentPage * perPage - perPage,
@@ -29,11 +32,11 @@ export const fetchProducts = () => {
       tags,
       category,
     };
+
     try {
       let {
         data: { data, count },
-      } = await debouncedFetchProducts({ params });
-
+      } = await debouncedFetchProducts(params);
       dispatch(successFetchingProducts({ data, count }));
     } catch (err) {
       dispatch(errorFetchingProducts());

@@ -48,7 +48,6 @@ export default function reducer(state = initialState, action) {
       return { ...state, currentPage: action.currentPage };
     case NEXT_PAGE:
       return { ...state, currentPage: state.currentPage + 1 };
-
     case PREV_PAGE:
       return { ...state, currentPage: state.currentPage - 1 };
     default:
