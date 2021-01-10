@@ -1,18 +1,21 @@
 import * as React from "react";
 import { config } from "../../config";
 import { arrayOf, string, shape, oneOfType, number, func } from "prop-types";
-import { CardItem, Button } from "upkit";
+import { CardItem, Button, Text } from "upkit";
 import FaArrowRight from "@meronex/icons/fa/FaArrowRight";
 import FaCartPlus from "@meronex/icons/fa/FaCartPlus";
+import { sumPrice } from "../../utils/sum-price";
+import { formatRupiah } from "../../utils/format-rupiah";
 
 export default function Cart({ items, onItemInc, onItemDec, onCheckout }) {
+  let total = sumPrice(items);
   return (
     <div>
       <div className="text-3xl flex items-center text-red-700">
         <FaCartPlus />
         <div className="ml-2">Keranjang</div>
       </div>
-
+      <Text as="h5">Total: {formatRupiah(total)}</Text>
       <div className="px-2 border-b mt-5 pb-5">
         <Button
           text="Checkout"
@@ -22,13 +25,11 @@ export default function Cart({ items, onItemInc, onItemDec, onCheckout }) {
           onClick={onCheckout}
         />
       </div>
-
       {!items.length ? (
         <div className="text-center text-sm text-red-900">
           belum ada items di keranjang{" "}
         </div>
       ) : null}
-
       <div className="p-2">
         {items.map((item, index) => {
           return (
