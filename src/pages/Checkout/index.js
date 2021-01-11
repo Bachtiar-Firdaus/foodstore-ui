@@ -3,8 +3,8 @@ import FaCartPlus from "@meronex/icons/fa/FaCartPlus";
 import FaAddressCard from "@meronex/icons/fa/FaAddressCard";
 import FaInfoCircle from "@meronex/icons/fa/FaInfoCircle";
 import { LayoutOne, Text, Steps, Table, Button, Responsive } from "upkit";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory, Redirect } from "react-router-dom";
 
 import TopBar from "../../components/TopBar";
 import { config } from "../../config";
@@ -14,6 +14,8 @@ import FaArrowRight from "@meronex/icons/fa/FaArrowRight";
 import FaArrowLeft from "@meronex/icons/fa/FaArrowLeft";
 import FaRegCheckCircle from "@meronex/icons/fa/FaRegCheckCircle";
 import { useAddressData } from "../../hooks/address";
+import { createOrder } from "../../api/order";
+import { clearItems } from "../../features/Cart/actions";
 
 const IconWrapper = ({ children }) => {
   return <div className="text-3xl flex justify-center">{children}</div>;
@@ -100,6 +102,23 @@ export default function Checkout() {
   let cart = useSelector((state) => state.cart);
   let { data, status, limit, page, count, setPage } = useAddressData();
   let [selectedAddress, setSelectedAddress] = React.useState(null);
+
+  let history = useHistory();
+  let dispatch = useDispatch();
+
+  async function handleCreateOrder() {
+    let payload = {
+      delivery_fee: config.global_ongkir,
+      delivery_address: selectedAddress._id,
+    };
+    let { data } = await createOrder(payload);
+    if (data?.error) return;
+    history.push(`/invoice/${data._id}`);
+    dispatchEvent(clearItems());
+  }
+  if (!cart.length) {
+    return <Redirect to="/" />;
+  }
   return (
     <LayoutOne>
       <TopBar />
@@ -234,6 +253,7 @@ export default function Checkout() {
             </div>
             <div className="text-right">
               <Button
+                onClick={handleCreateOrder}
                 color="red"
                 size="large"
                 iconBefore={<FaRegCheckCircle />}
