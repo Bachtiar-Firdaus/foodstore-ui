@@ -18,6 +18,8 @@ import RegisterSuccess from "./pages/RegisterSuccess";
 import login from "./pages/Login";
 import { getCart } from "./api/cart";
 import GuardRoute from "./components/GuardRoute";
+import GuestOnlyRoute from "./components/GuestOnlyRoute";
+import Login from "./pages/Login";
 
 function App() {
   React.useEffect(() => {
@@ -50,12 +52,18 @@ function App() {
             <GuardRoute path="/alamat-pengiriman">
               <UserAddress />
             </GuardRoute>
-            <GuardRoute path="/register/berhasil">
+            <GuestOnlyRoute path="/register/berhasil">
               <RegisterSuccess />
-            </GuardRoute>
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={login} />
-            <Route path="/" component={Home} />
+            </GuestOnlyRoute>
+            <GuestOnlyRoute path="/register">
+              <Register />
+            </GuestOnlyRoute>
+            <GuestOnlyRoute path="/login">
+              <Login />
+            </GuestOnlyRoute>
+            <Route path="/">
+              <Home />
+            </Route>
           </Switch>
         </Router>
       </Provider>
