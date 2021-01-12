@@ -21,6 +21,13 @@ export default function UserAddressAdd() {
 
   let allFields = watch();
   React.useEffect(() => {
+    register({ name: "provinsi" }, rules.provinsi);
+    register({ name: "kabupaten" }, rules.kabupaten);
+    register({ name: "kecamatan" }, rules.kecamatan);
+    register({ name: "kelurahan" }, rules.kelurahan);
+  }, [register]);
+
+  React.useEffect(() => {
     setValue("kabupaten", null);
     setValue("kecamatan", null);
     setValue("kelurahan", null);
