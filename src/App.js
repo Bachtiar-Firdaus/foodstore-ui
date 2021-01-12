@@ -17,6 +17,7 @@ import Register from "./pages/Register";
 import RegisterSuccess from "./pages/RegisterSuccess";
 import login from "./pages/Login";
 import { getCart } from "./api/cart";
+import GuardRoute from "./components/GuardRoute";
 
 function App() {
   React.useEffect(() => {
@@ -28,30 +29,30 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route path="/logout">
+            <GuardRoute path="/logout">
               <Logout />
-            </Route>
-            <Route path="/pesanan">
+            </GuardRoute>
+            <GuardRoute path="/pesanan">
               <UserOrders />
-            </Route>
-            <Route path="/account">
+            </GuardRoute>
+            <GuardRoute path="/account">
               <UserAccount />
-            </Route>
-            <Route path="/invoice/:order_id">
+            </GuardRoute>
+            <GuardRoute path="/invoice/:order_id">
               <Invoice />
-            </Route>
-            <Route path="/checkout">
+            </GuardRoute>
+            <GuardRoute path="/checkout">
               <Checkout />
-            </Route>
-            <Route path="/alamat-pengiriman/tambah">
+            </GuardRoute>
+            <GuardRoute path="/alamat-pengiriman/tambah">
               <UserAddressAdd />
-            </Route>
-            <Route path="/alamat-pengiriman">
+            </GuardRoute>
+            <GuardRoute path="/alamat-pengiriman">
               <UserAddress />
-            </Route>
-            <Route path="/register/berhasil">
+            </GuardRoute>
+            <GuardRoute path="/register/berhasil">
               <RegisterSuccess />
-            </Route>
+            </GuardRoute>
             <Route path="/register" component={Register} />
             <Route path="/login" component={login} />
             <Route path="/" component={Home} />
