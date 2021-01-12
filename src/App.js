@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { listen } from "./app/listener";
 import "upkit/dist/style.min.css";
 
+import UserOrders from "./pages/UserOrders";
 import UserAccount from "./pages/UserAccount";
 import Invoice from "./pages/Invoice";
 import Checkout from "./pages/Checkout";
@@ -26,6 +27,9 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
+            <Route path="/pesanan">
+              <UserOrders />
+            </Route>
             <Route path="/account">
               <UserAccount />
             </Route>

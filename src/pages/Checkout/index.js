@@ -114,7 +114,7 @@ export default function Checkout() {
     let { data } = await createOrder(payload);
     if (data?.error) return;
     history.push(`/invoice/${data._id}`);
-    dispatchEvent(clearItems());
+    dispatch(clearItems());
   }
   if (!cart.length) {
     return <Redirect to="/" />;

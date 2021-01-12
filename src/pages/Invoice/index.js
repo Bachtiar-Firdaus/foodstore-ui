@@ -9,10 +9,10 @@ import { config } from "../../config";
 import StatusLabel from "../../components/StatusLabel";
 
 export default function Invoice() {
-  let { params } = useRouteMatch();
   let [invoice, setInvoice] = React.useState(null);
   let [error, setError] = React.useState("");
   let [status, setStatus] = React.useState("process");
+  let { params } = useRouteMatch();
 
   React.useEffect(() => {
     getInvoiceByOrderId(params?.order_id)
@@ -28,7 +28,7 @@ export default function Invoice() {
     return (
       <LayoutOne>
         <TopBar />
-        <Text as="a3">Terjadi Keasalahan</Text>
+        <Text as="h3">Terjadi Keasalahan</Text>
         {error}
       </LayoutOne>
     );
@@ -47,7 +47,7 @@ export default function Invoice() {
   return (
     <LayoutOne>
       <TopBar />
-      <Text as="3"> Invoice </Text>
+      <Text as="h3"> Invoice </Text>
       <br />
 
       <Table
